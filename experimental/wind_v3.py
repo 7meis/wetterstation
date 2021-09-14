@@ -26,7 +26,7 @@ wind_speed_sensor.when_pressed = spin
 while True:
   time.sleep(1)
   wind_kmh = wind_count*2.4
-  print("RPM is {0}".format(wind_count))
-  print("Wind Speed:", wind_kmh)
+  #print("RPM is {0}".format(wind_count))
+  #print("Wind Speed:", wind_kmh)
   WindSeriesHelper(location='jaberg', windspeed=wind_kmh)
   wind_count = 0
