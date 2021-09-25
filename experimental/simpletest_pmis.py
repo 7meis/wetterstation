@@ -1,3 +1,4 @@
+i#!/usr/bin/env python3
 # Simple example of reading the MCP3008 analog input channels and printing
 # them all out.
 # Author: Tony DiCola
