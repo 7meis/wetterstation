@@ -1,0 +1,14 @@
+---
+mqttSettings:
+  mqttHost: "localhost"
+  mqttPort: 1883
+  mqttKeepalive: 60
+bme380Settings:
+  location: Jaberg
+  interval: 10
+  mainTopic: bme280
+  SubTopics:
+   - temperature
+   - humidity
+   - pressure
+...
