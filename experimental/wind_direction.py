@@ -21,3 +21,8 @@ while True:
     print(chan0.value)
 #   print(chan0.voltage)
     time.sleep(0.5)
+
+
+def voltDivider(res1, res2, voltIn):
+    voltOut = (voltIn * res1) / (res1 + res2)
+    return round(voltOut, 3)
