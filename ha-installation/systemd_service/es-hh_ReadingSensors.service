@@ -1,0 +1,17 @@
+# Location: /lib/systemd/system/es-hh_ReadingSensors.service
+
+[Unit]
+Description=Reading sensors and publish via MQTT to Home Assistant
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/es-hh_Start_ReadingSensors.py
+Restart=always
+RestartSec=5s
+TimeoutSec=60
+RuntimeMaxSec=infinity
+PIDFile=/tmp/es-hh_ReadingSensors.pid
+
+[Install]
+WantedBy=multi-user.target
