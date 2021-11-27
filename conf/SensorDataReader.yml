@@ -1,4 +1,5 @@
 ---
+logfile: SensorDataReader.log
 read-interval: 60
 sensors:
   bme280:

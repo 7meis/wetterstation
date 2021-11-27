@@ -3,26 +3,34 @@
 import yaml
 import paho.mqtt.client as mqtt
 import time
+import logging
 from yaml.loader import SafeLoader
+
+
 
 with open('./conf/SensorDataReader.yml') as f:
         conf = yaml.load(f, Loader=SafeLoader)
-        print(conf)
+        logfile = conf['logfile']
+        logging.basicConfig(filename=logfile, level=logging.DEBUG)
+        logger = logging.getLogger('SensorDataReader')
+        logger.debug("Config: %s", conf)
+
+
 
 def readSensors(mqttc, mainTopic):
     for sensor in conf['sensors']:
         sensorEnabled = conf['sensors'][sensor]['enabled']
         sensorTopic = conf['sensors'][sensor]['topic']
-        print("Sensor: ", sensor)
-        print("Sensor enabled: ", sensorEnabled)
-        print("Sensor-Topic: ", sensorTopic)
+        logger.info("Sensor: %s", sensor)
+        logger.info("Sensor enabled: %s", sensorEnabled)
+        logger.info("Sensor-Topic: %s", sensorTopic)
         if sensorEnabled:
             sensorModule = __import__(sensor)
             sensorData = sensorModule.getData()
-            print("Sensor data: ", sensorData)
+            logger.debug("Sensor data: %s", sensorData)
             for metric, value in sensorData.items():
-                print("Topic: ", metric)
-                print("Value: ", value)
+                logger.debug("Topic: %s", metric)
+                logger.debug("Value: %s", value)
                 topic = mainTopic + "/" + sensor + "/" + metric
                 mqttc.publish(topic, value)
 
@@ -34,6 +42,7 @@ def mqttClient(host, port, keepalive):
 
 
 def main():
+    logger.info('SensorDataReader started')
     mqttHost = conf['mqtt']['broker-host']
     mqttPort = conf['mqtt']['broker-port']
     mqttKeepalive = conf['mqtt']['keepalive']
