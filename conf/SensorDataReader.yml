@@ -1,21 +1,23 @@
 ---
+read-interval: 60
 sensors:
   bme280:
-    enable: true
-    script-path: ./bme280_i2c.py
+    enabled: yes
     topic: bme280
   windspeed:
-    enable: true
+    enabled: no
     script-path: ./experimental/wind_v3.py
     topic: windspeed
   winddirection:
-    enabled: true
+    enabled: no
     script-path: ./experimental/wind_direction.py
     topic: winddir
   rainmeter:
-    enabled: true
+    enabled: no
     script-path: ./experimental/wind_direction.py
     topic: rainmeter
 mqtt:
-  broker-url: localhost:1883
-  sensor-topic: sensor
+  broker-host: localhost
+  broker-port: 1883
+  keepalive: 60
+  main-topic: weather
