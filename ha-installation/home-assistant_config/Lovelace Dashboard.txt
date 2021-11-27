@@ -1,0 +1,45 @@
+
+title: ES-HH
+views:
+  - path: default_view
+    title: Home
+    cards:
+      - type: entities
+        entities:
+          - binary_sensor.updater
+        title: Binary sensor
+      - type: entities
+        entities:
+          - person.admin
+        title: Person
+      - type: entities
+        entities:
+          - sun.sun
+        title: Sun
+      - type: entities
+        entities:
+          - entity: sensor.temperature_sensor_1
+          - entity: sensor.humidity_sensor_1
+        title: Sensor
+      - type: weather-forecast
+        entity: weather.es_hh
+        show_forecast: false
+      - type: sensor
+        entity: sensor.temperature_sensor_1
+        graph: line
+        name: Office Temperature Graph
+        detail: 2
+        hours_to_show: 4
+      - type: gauge
+        entity: sensor.temperature_sensor_1
+        min: 0
+        max: 30
+        name: Office Temperature
+      - type: glance
+        entities:
+          - sensor.temperature_sensor_1
+          - sensor.humidity_sensor_1
+      - type: sensor
+        entity: sensor.humidity_sensor_1
+        graph: line
+        name: Office Humidity Sensor 1
