@@ -3,12 +3,6 @@ import board
 from adafruit_bme280 import basic as adafruit_bme280
 
 
-""" def mqttClient(host, port, keepalive):
-mqttc = mqtt.Client()
-client = mqttc.connect(str(host), int(port), int(keepalive))
-return client """
-
-
 i2c = board.I2C()
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c)
 
