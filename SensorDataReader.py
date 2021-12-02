@@ -7,7 +7,7 @@ import time
 import logging
 from yaml.loader import SafeLoader
 
-sys.path.insert(0, './lib')
+sys.path.insert(0, './sensors')
 
 with open('./conf/SensorDataReader.yml') as f:
         conf = yaml.load(f, Loader=SafeLoader)
