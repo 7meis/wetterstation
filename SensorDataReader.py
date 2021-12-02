@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-
+import sys
+from concurrent import futures
 import yaml
 import paho.mqtt.client as mqtt
 import time
 import logging
 from yaml.loader import SafeLoader
 
-
+sys.path.insert(0, './lib')
 
 with open('./conf/SensorDataReader.yml') as f:
         conf = yaml.load(f, Loader=SafeLoader)
@@ -17,14 +18,25 @@ with open('./conf/SensorDataReader.yml') as f:
 
 
 
-def readSensors(mqttc, mainTopic):
-    for sensor in conf['sensors']:
-        sensorEnabled = conf['sensors'][sensor]['enabled']
-        sensorTopic = conf['sensors'][sensor]['topic']
-        logger.info("Sensor: %s", sensor)
-        logger.info("Sensor enabled: %s", sensorEnabled)
-        logger.info("Sensor-Topic: %s", sensorTopic)
-        if sensorEnabled:
+def startSensors(mqttc, mainTopic):
+    e = futures.ThreadPoolExecutor(max_workers=3)
+    try:
+        for sensor in conf['sensors']:
+            logger.info("Start sensor: %s", sensor)
+            e.submit(readSensor, mqttc, mainTopic, sensor)
+    except KeyboardInterrupt:
+        e.shutdown
+        
+
+def readSensor(mqttc, mainTopic, sensor):
+    sensorEnabled = conf['sensors'][sensor]['enabled']
+    sensorTopic = conf['sensors'][sensor]['topic']
+    sensorPollIntervall = conf['sensors'][sensor]['poll-intervall']
+    logger.info("Sensor: %s", sensor)
+    logger.info("Sensor enabled: %s", sensorEnabled)
+    logger.info("Sensor-Topic: %s", sensorTopic)
+    if sensorEnabled:
+        while True:
             sensorModule = __import__(sensor)
             sensorData = sensorModule.getData()
             logger.debug("Sensor data: %s", sensorData)
@@ -33,6 +45,7 @@ def readSensors(mqttc, mainTopic):
                 logger.debug("Value: %s", value)
                 topic = mainTopic + "/" + sensor + "/" + metric
                 mqttc.publish(topic, value)
+            time.sleep(sensorPollIntervall)
 
 
 def mqttClient(host, port, keepalive):
@@ -49,9 +62,10 @@ def main():
     mqttc = mqttClient(mqttHost, mqttPort, mqttKeepalive)
     mainTopic = conf['mqtt']['main-topic']
     readInterval = conf['read-interval']
-    while True:
-        readSensors(mqttc, mainTopic)
-        time.sleep(readInterval)
+    startSensors(mqttc, mainTopic)
+    #while True:
+        
+    #time.sleep(readInterval)
 
 
 if __name__ == "__main__":

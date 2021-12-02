@@ -5,18 +5,24 @@ sensors:
   bme280:
     enabled: yes
     topic: bme280
+    type: poll
+    poll-intervall: 60
   windspeed:
-    enabled: no
-    script-path: ./experimental/wind_v3.py
+    enabled: yes
     topic: windspeed
+    type: poll
+    poll-intervall: 2
   winddirection:
-    enabled: no
-    script-path: ./experimental/wind_direction.py
+    enabled: yes
     topic: winddir
+    type: poll
+    poll-intervall: 10
   rainmeter:
     enabled: no
     script-path: ./experimental/wind_direction.py
     topic: rainmeter
+    type: pop
+    poll-intervall: 60
 mqtt:
   broker-host: localhost
   broker-port: 1883
