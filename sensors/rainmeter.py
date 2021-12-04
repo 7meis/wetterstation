@@ -7,40 +7,66 @@ rainSensor = Button(6)
 BUCKET_MEASURE = 0.2794
 dayCount = 0
 hourCount = 0
+monthCount = 0
+previousMonth = 0
 previousDayOfMonth = 0
 previousHour = 0
+bucketTipTotalCount = 0
+bucketTipPreviousCount = 0
 
 def bucketTipped():
+    global monthCount
     global dayCount
     global hourCount
+    global bucketTipTotalCount
+    dayCount +=1
+    hourCount +=1
+    monthCount +=1
+    bucketTipTotalCount +=1
+
+
+def monthValue():
+    global monthCount
+    global previousMonth
+    currentMonth = datetime.datetime.today().month
+    if(currentMonth == previousMonth):
+        return round(monthCount * BUCKET_MEASURE, 4)
+    else:
+        previousMonth = currentMonth
+        monthCount = 0
+        return 0
+
+
+def dayValue():
+    global dayCount
     global previousDayOfMonth
-    global previousHour
     currentDayOdMonth = datetime.datetime.today().day
-    currentHour = datetime.datetime.now().hour
     if(currentDayOdMonth == previousDayOfMonth):
-        dayCount +=1
+        return round(dayCount * BUCKET_MEASURE, 4)
     else:
+        previousDayOfMonth = currentDayOdMonth
         dayCount = 0
+        return 0
+
+
+def hourValue():
+    global hourCount
+    global previousHour
+    currentHour = datetime.datetime.now().hour
     if(currentHour == previousHour):
-        hourCount +=1
+        return round(hourCount * BUCKET_MEASURE, 4)
     else:
+        previousHour = currentHour
         hourCount = 0
-    previousDayOfMonth = currentDayOdMonth
-    previousHour = currentHour
-    
+        return 0
+
 
 def getData():
     return {
-        "rain24h": round(dayCount * BUCKET_MEASURE, 4),
-        "rain1h": round(hourCount * BUCKET_MEASURE, 4)
+        "rainmonth": monthValue(),
+        "rain24h": dayValue(),
+        "rain1h": hourValue()
     }
 
-def resetRain():
-    global count
-    count = 0
 
 rainSensor.when_pressed = bucketTipped
-
-
-
-
