@@ -18,10 +18,9 @@ sensors:
     type: poll
     poll-intervall: 10
   rainmeter:
-    enabled: no
-    script-path: ./experimental/wind_direction.py
+    enabled: yes
     topic: rainmeter
-    type: pop
+    type: poll
     poll-intervall: 60
 mqtt:
   broker-host: localhost

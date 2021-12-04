@@ -19,7 +19,7 @@ with open('./conf/SensorDataReader.yml') as f:
 
 
 def startSensors(mqttc, mainTopic):
-    e = futures.ThreadPoolExecutor(max_workers=3)
+    e = futures.ThreadPoolExecutor(max_workers=4)
     try:
         for sensor in conf['sensors']:
             logger.info("Start sensor: %s", sensor)
