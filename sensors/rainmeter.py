@@ -2,13 +2,14 @@
 from  gpiozero import Button
 import datetime
 import yaml
+from yaml.loader import SafeLoader
 from os.path import exists
 
 rainSensor = Button(6)
 dataFile = "data/rainmeterData.yml"
 if(exists(dataFile)):
     with open(dataFile, 'r') as f:
-        data = yaml.load(f, Loader=yaml.SafeLoader)
+        data = yaml.load(f, Loader=SafeLoader)
     print(yaml.dump(data))
 else:
     data = {
