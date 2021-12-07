@@ -5,7 +5,7 @@ import yaml
 from os.path import exists
 
 rainSensor = Button(6)
-dataFile = "rainmeterData.yml"
+dataFile = "data/rainmeterData.yml"
 if(exists(dataFile)):
     with open(dataFile, 'w') as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
