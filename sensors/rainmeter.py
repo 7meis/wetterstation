@@ -36,7 +36,7 @@ def monthValue():
     global data
     currentMonth = datetime.datetime.today().month
     if(currentMonth == data["previousMonth"]):
-        return round(data["monthCount"] * BUCKET_MEASURE, 4)
+        return round(data["monthCount"] * data["BUCKET_MEASURE"], 4)
     else:
         data["previousMonth"] = currentMonth
         data["monthCount"] = 0
