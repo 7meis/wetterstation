@@ -9,7 +9,7 @@ dataFile = "data/rainmeterData.yml"
 if(exists(dataFile)):
     with open(dataFile, 'r') as f:
         data = yaml.load(f, Loader=yaml.SafeLoader)
-    yaml.dump(data)
+    print(yaml.dump(data))
 else:
     data = {
         'BUCKET_MEASURE': 0.2794,
