@@ -28,7 +28,7 @@ def bucketTipped():
     data["hourCount"] +=1
     data["monthCount"] +=1
     data["bucketTipTotalCount"] +=1
-    with open(counterFile, 'w') as f:
+    with open(dataFile, 'w') as f:
       yaml.dump(data, f, sort_keys=False, default_flow_style=False)
 
 
@@ -66,7 +66,7 @@ def hourValue():
 
 
 def getData():
-    with open(counterFile, 'w') as f:
+    with open(dataFile, 'w') as f:
       yaml.dump(data, f, sort_keys=False, default_flow_style=False)
     return {
         "rainmonth": monthValue(),
