@@ -1,72 +1,78 @@
 #!/usr/bin/env python3
 from  gpiozero import Button
 import datetime
-
+import yaml
+from os.path import exists
 
 rainSensor = Button(6)
-BUCKET_MEASURE = 0.2794
-dayCount = 0
-hourCount = 0
-monthCount = 0
-previousMonth = 0
-previousDayOfMonth = 0
-previousHour = 0
-bucketTipTotalCount = 0
-bucketTipPreviousCount = 0
+counterFile = "rainmeterCounters.yml"
+if(exists(dataFile)):
+    with open(counterFile, 'w') as f:
+        data = yaml.load(f, Loader=yaml.FullLoader)
+else:
+    data = {
+        "BUCKET_MEASURE": 0.2794,
+        "previousMonth": 0,
+        "previousDayOfMonth": 0,
+        "previousHour": 0,
+        "dayCount": 0,
+        "hourCount": 0,
+        "monthCount": 0,
+        "bucketTipTotalCount": 0,
+        "bucketTipPreviousCount": 0
+    }
 
 def bucketTipped():
-    global monthCount
-    global dayCount
-    global hourCount
-    global bucketTipTotalCount
-    dayCount +=1
-    hourCount +=1
-    monthCount +=1
-    bucketTipTotalCount +=1
+    global data
+    data["dayCount"] +=1
+    data["hourCount"] +=1
+    data["monthCount"] +=1
+    data["bucketTipTotalCount"] +=1
+    with open(counterFile, 'w') as f:
+      yaml.dump(data, f, sort_keys=False, default_flow_style=False)
 
 
 def monthValue():
-    global monthCount
-    global previousMonth
+    global data
     currentMonth = datetime.datetime.today().month
-    if(currentMonth == previousMonth):
-        return round(monthCount * BUCKET_MEASURE, 4)
+    if(currentMonth == data["previousMonth"]):
+        return round(data["monthCount"] * BUCKET_MEASURE, 4)
     else:
-        previousMonth = currentMonth
-        monthCount = 0
+        data["previousMonth"] = currentMonth
+        data["monthCount"] = 0
         return 0
 
 
 def dayValue():
-    global dayCount
-    global previousDayOfMonth
+    global data
     currentDayOdMonth = datetime.datetime.today().day
-    if(currentDayOdMonth == previousDayOfMonth):
-        return round(dayCount * BUCKET_MEASURE, 4)
+    if(currentDayOdMonth == data["previousDayOfMonth"]):
+        return round(data["dayCount"] * data["BUCKET_MEASURE"], 4)
     else:
-        previousDayOfMonth = currentDayOdMonth
-        dayCount = 0
+        data["previousDayOfMonth"] = currentDayOdMonth
+        data["dayCount"] = 0
         return 0
 
 
 def hourValue():
-    global hourCount
-    global previousHour
+    global data
     currentHour = datetime.datetime.now().hour
-    if(currentHour == previousHour):
-        return round(hourCount * BUCKET_MEASURE, 4)
+    if(currentHour == data["previousHour"]):
+        return round(data["hourCount"] * data["BUCKET_MEASURE"], 4)
     else:
-        previousHour = currentHour
-        hourCount = 0
+        data["previousHour"] = currentHour
+        data["hourCount"] = 0
         return 0
 
 
 def getData():
+    with open(counterFile, 'w') as f:
+      yaml.dump(data, f, sort_keys=False, default_flow_style=False)
     return {
         "rainmonth": monthValue(),
         "rain24h": dayValue(),
         "rain1h": hourValue()
     }
-
+    
 
 rainSensor.when_pressed = bucketTipped
