@@ -8,7 +8,7 @@ rainSensor = Button(6)
 dataFile = "data/rainmeterData.yml"
 if(exists(dataFile)):
     with open(dataFile, 'r') as f:
-        data = yaml.load(f, Loader=yaml.FullLoader)
+        data = yaml.load(f, Loader=yaml.SafeLoader)
     yaml.dump(data)
 else:
     data = {
