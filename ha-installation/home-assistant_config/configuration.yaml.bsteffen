@@ -1,0 +1,26 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
+sensor dht11:
+  - platform: mqtt
+    state_topic: "pi/dht11_temperature"
+    name: "Temperature Sensor 1"
+    unique_id: "dht11_temperature"
+  - platform: mqtt
+    state_topic: "pi/dht11_humidity"
+    name: "Humidity Sensor 1"
+    unique_id: "dht11_humidity"
+
+homeassistant:
+  customize: !include customize.yaml

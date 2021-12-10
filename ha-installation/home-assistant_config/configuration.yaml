@@ -12,15 +12,69 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 
-sensor dht11:
+sensor bme280:
   - platform: mqtt
-    state_topic: "pi/dht11_temperature"
-    name: "Temperature Sensor 1"
-    unique_id: "dht11_temperature"
+    state_topic: "weather/bme280/temperature"
+    name: "Temperature Sensor BME280"
+    unit_of_measurement: "°C"
+    unique_id: "bme280_temperature"
+    state_class: measurement
+    device_class: temperature
   - platform: mqtt
-    state_topic: "pi/dht11_humidity"
-    name: "Humidity Sensor 1"
-    unique_id: "dht11_humidity"
+    state_topic: "weather/bme280/humidity"
+    name: "Humidity Sensor BME280"
+    unit_of_measurement: "%"
+    unique_id: "bme280_humidity"
+    state_class: measurement
+    device_class: humidity
+  - platform: mqtt
+    state_topic: "weather/bme280/pressure"
+    name: "Pressure Sensor BME280"
+    unit_of_measurement: "hPa"
+    unique_id: "bme280_pressure"
+    state_class: measurement
+    device_class: pressure
+
+
+sensor winddir:
+  - platform: mqtt
+    state_topic: "weather/winddirection/winddir"
+    name: "Wind Direction"
+    unit_of_measurement: "Compass Heading"
+    unique_id: "winddir"
+    state_class: measurement
+
+
+sensor windspeed:
+  - platform: mqtt
+    state_topic: "weather/windspeed/windspeed"
+    name: "Windspeed"
+    unit_of_measurement: "km/h"
+    unique_id: "windspeed"
+    state_class: measurement
+
+
+sensor rainmeter:
+  - platform: mqtt
+    state_topic: "weather/rainmeter/rain24h"
+    name: "Rain mm per 24 hours"
+    unit_of_measurement: "rain in mm per 24 hours"
+    unique_id: "rainmeter_24hours"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/rainmeter/rain1h"
+    name: "Rain mm per hour"
+    unit_of_measurement: "rain in mm per hour"
+    unique_id: "rainmeter_1hour"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/rainmeter/rainmonth"
+    name: "Rain mm per month"
+    unit_of_measurement: "rain in mm per month"
+    unique_id: "rainmeter_month_copy"
+    state_class: measurement
+
+
 
 homeassistant:
   customize: !include customize.yaml
