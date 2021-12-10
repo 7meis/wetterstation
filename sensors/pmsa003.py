@@ -41,7 +41,8 @@ def measure():
     PLANTOWER.set_to_wakeup()
     PLANTOWER.mode_change(plantower.PMS_PASSIVE_MODE)
     time.sleep(30)
-    result = PLANTOWER.read_in_passive().split(",")
+    readout = PLANTOWER.read_in_passive()
+    result = str(readout).split(",")
     PLANTOWER.set_to_sleep()
     return result
 
