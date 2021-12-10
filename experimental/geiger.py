@@ -44,7 +44,7 @@ while True:
 
     if loopCount == 10:
         cpm = int(len(count))
-        uSvh = cpm * j305_tube_ratio
+        uSvh = round(cpm * j305_tube_ratio, 4)
         print("Count: ", cpm)
         print("uSv/h: ", uSvh)
         loopCount = 0
