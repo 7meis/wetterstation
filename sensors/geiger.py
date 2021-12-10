@@ -45,7 +45,7 @@ def getData():
 
     if loop_count == 10:
         cpm = int(len(count))
-        usvh = cpm * j305_tube_ratio
+        usvh = round(cpm * j305_tube_ratio, 6)
         print("Count: ", cpm)
         print("uSv/h: ", usvh)
         return {
