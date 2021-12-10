@@ -43,7 +43,7 @@ def readSensor(mqttc, mainTopic, sensor):
             for metric, value in sensorData.items():
                 logger.debug("Topic: %s", metric)
                 logger.debug("Value: %s", value)
-                topic = mainTopic + "/" + sensor + "/" + metric
+                topic = mainTopic + "/" + sensorTopic + "/" + metric
                 logger.debug("Full-Topic: %s", topic)
                 mqttc.publish(topic, value)
             time.sleep(sensorPollIntervall)
