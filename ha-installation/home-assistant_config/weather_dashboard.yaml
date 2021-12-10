@@ -1,0 +1,94 @@
+views:
+  - title: Home
+    cards:
+      - type: gauge
+        entity: sensor.pressure_sensor_bme280
+        min: 0
+        max: 1500
+        name: Pressure
+      - type: sensor
+        entity: sensor.pressure_sensor_bme280
+        graph: line
+        detail: 2
+        icon: mdi:arrow-collapse-all
+      - type: gauge
+        entity: sensor.temperature_sensor_bme280
+        max: 60
+        name: Temperature
+        min: -40
+      - type: sensor
+        entity: sensor.temperature_sensor_bme280
+        graph: line
+        icon: mdi:thermometer
+        detail: 2
+      - type: gauge
+        entity: sensor.humidity_sensor_bme280
+        min: 0
+        max: 100
+        name: Humidity
+      - type: sensor
+        entity: sensor.humidity_sensor_bme280
+        graph: line
+        detail: 2
+        icon: mdi:water-percent
+      - type: gauge
+        entity: sensor.windspeed
+        min: 0
+        unit: km/h
+        max: 200
+        needle: true
+      - type: entity
+        entity: sensor.wind_direction
+        icon: mdi:windsock
+      - type: entity
+        entity: sensor.rain_mm_per_24_hours
+        icon: mdi:weather-rainy
+      - type: entity
+        entity: sensor.rain_mm_per_hour
+        icon: mdi:weather-rainy
+      - type: entity
+        entity: sensor.rain_mm_per_month
+  - title: Statistics
+    path: statistics
+    icon: mdi:chart-areaspline
+    type: sidebar
+    badges: []
+    cards:
+      - type: statistics-graph
+        entities:
+          - sensor.humidity_sensor_bme280
+        days_to_show: 30
+        title: Humidity
+      - type: statistics-graph
+        entities:
+          - sensor.pressure_sensor_bme280
+        days_to_show: 30
+        title: Pressure
+      - type: statistics-graph
+        entities:
+          - sensor.temperature_sensor_bme280
+        days_to_show: 30
+        title: Temperature
+        stat_types:
+          - mean
+          - min
+          - max
+      - type: statistics-graph
+        entities:
+          - sensor.rain_mm_per_24_hours
+        days_to_show: 30
+        title: Rain 24 hours
+        chart_type: bar
+      - type: statistics-graph
+        entities:
+          - sensor.rain_mm_per_hour
+        days_to_show: 1
+        title: Rain per hour
+        chart_type: bar
+      - type: statistics-graph
+        entities:
+          - sensor.rain_mm_per_month
+        days_to_show: 365
+        title: Rain per month
+        chart_type: bar
+title: 'Weather Station '
