@@ -49,6 +49,6 @@ def getData():
         print("Count: ", cpm)
         print("uSv/h: ", usvh)
         return {
-            "count": count,
+            "count": cpm,
             "uSvh": usvh
         }
