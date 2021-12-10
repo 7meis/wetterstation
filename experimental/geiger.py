@@ -13,7 +13,7 @@ hundredcount = 0
 j305_tube_ratio = 0.00812037037037
 
 def geigerCount(channel):
-    global count, nundredcount
+    global count, hundredcount
     timestamp = datetime.datetime.now()
     count.append(timestamp)
     #count +=1
