@@ -75,6 +75,83 @@ sensor rainmeter:
     state_class: measurement
 
 
+sensor pmsa003:
+  - platform: mqtt
+    state_topic: "weather/airquality/pm10_cf1"
+    name: "PM1.0 standard particle"
+    unit_of_measurement: "μ g/m3"
+    unique_id: "pm10_cf1"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/pm25_cf1"
+    name: "PM2.5 standard particle"
+    unit_of_measurement: "μ g/m3"
+    unique_id: "pm25_cf1"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/pm100_cf1"
+    name: "PM10.0 standard particle"
+    unit_of_measurement: "μ g/m3"
+    unique_id: "pm100_cf1"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/pm10_std"
+    name: "PM1.0 atmospheric environment"
+    unit_of_measurement: "μ g/m3"
+    unique_id: "pm10_std"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/pm25_std"
+    name: "PM2.5 atmospheric environment"
+    unit_of_measurement: "μ g/m3"
+    unique_id: "pm25_std"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/pm100_std"
+    name: "PM10.0 atmospheric environment"
+    unit_of_measurement: "μ g/m3"
+    unique_id: "pm100_std"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/gr03um"
+    name: "particles with diameter beyond 0.3 μm in 0.1 L of air"
+    unit_of_measurement: "particle 0.3 μm/0.1L"
+    unique_id: "gr03um"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/gr05um"
+    name: "particles with diameter beyond 0.5 μm in 0.1 L of air"
+    unit_of_measurement: "particle 0.5 μm/0.1L"
+    unique_id: "gr05um"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/gr10um"
+    name: "particles with diameter beyond 1 μm in 0.1 L of air"
+    unit_of_measurement: "paricle 1.0 μm/0.1L"
+    unique_id: "gr10um"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/airquality/gr25um"
+    name: "particles with diameter beyond 2.5 μm in 0.1 L of air"
+    unit_of_measurement: "particle 2.5 μm/0.1L"
+    unique_id: "gr25um"
+    state_class: measurement
+
+
+sensor geiger:
+  - platform: mqtt
+    state_topic: "weather/geiger/count"
+    name: "Geiger Count"
+    unit_of_measurement: "count/min"
+    unique_id: "geiger_count"
+    state_class: measurement
+  - platform: mqtt
+    state_topic: "weather/geiger/uSvh"
+    name: "Radiation in μSv/h"
+    unit_of_measurement: "μSv/h"
+    unique_id: "geiger_usvh"
+    state_class: measurement
+
 
 homeassistant:
   customize: !include customize.yaml

@@ -91,4 +91,42 @@ views:
         days_to_show: 365
         title: Rain per month
         chart_type: bar
+  - title: Air Quality
+    path: air-quality
+    badges: []
+    cards:
+      - type: entity
+        entity: sensor.pm1_0_standard_partcle
+      - type: entity
+        entity: sensor.pm2_5_standard_partcle
+      - type: entity
+        entity: sensor.pm10_0_standard_partcle
+      - type: entity
+        entity: sensor.pm1_0_atmospheric_environment
+      - type: entity
+        entity: sensor.pm2_5_atmospheric_environment
+      - type: entity
+        entity: sensor.pm10_0_atmospheric_environment
+      - type: entity
+        entity: sensor.particles_with_diameter_beyond_0_3_mm_in_0_1_l_of_air
+      - type: entity
+        entity: sensor.particles_with_diameter_beyond_0_5_mm_in_0_1_l_of_air
+      - type: entity
+        entity: sensor.particles_with_diameter_beyond_1_mm_in_0_1_l_of_air
+      - type: entity
+        entity: sensor.particles_with_diameter_beyond_2_5_mm_in_0_1_l_of_air
+  - title: Radiation
+    path: radiation
+    icon: mdi:radioactive
+    badges: []
+    cards:
+      - type: entity
+        entity: sensor.geiger_count
+      - type: entity
+        entity: sensor.radiation_in_msv_h
+      - type: gauge
+        entity: sensor.radiation_in_msv_h
+        min: 0
+        max: 1
+        needle: true
 title: 'Weather Station '
