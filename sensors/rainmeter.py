@@ -5,7 +5,10 @@ import yaml
 from yaml.loader import SafeLoader
 from os.path import exists
 
+# initialize rain sensor as button
 rainSensor = Button(6)
+
+# specify data file and read if it exists
 dataFile = "data/rainmeterData.yml"
 if(exists(dataFile)):
     with open(dataFile, 'r') as f:
@@ -25,6 +28,7 @@ else:
     }
 
 def bucketTipped():
+    """set counters if bucket is tipped"""
     global data
     data['dayCount'] +=1
     data['hourCount'] +=1
@@ -34,7 +38,12 @@ def bucketTipped():
       yaml.dump(data, f, sort_keys=False, default_flow_style=False)
 
 
+# whenn button is pressed call bucketTipped to count
+rainSensor.when_pressed = bucketTipped
+
+
 def monthValue():
+    """calculate and return month value"""
     global data
     currentMonth = datetime.datetime.today().month
     if(currentMonth == data['previousMonth']):
@@ -46,6 +55,7 @@ def monthValue():
 
 
 def dayValue():
+    """calculate and return day value"""
     global data
     currentDayOdMonth = datetime.datetime.today().day
     if(currentDayOdMonth == data['previousDayOfMonth']):
@@ -57,6 +67,7 @@ def dayValue():
 
 
 def hourValue():
+    """calculate and return hour value"""
     global data
     currentHour = datetime.datetime.now().hour
     if(currentHour == data['previousHour']):
@@ -68,6 +79,7 @@ def hourValue():
 
 
 def getData():
+    """gather sensor data and return it as dictionary"""
     with open(dataFile, 'w') as f:
       yaml.dump(data, f, sort_keys=False, default_flow_style=False)
     return {
@@ -77,4 +89,4 @@ def getData():
     }
     
 
-rainSensor.when_pressed = bucketTipped
+

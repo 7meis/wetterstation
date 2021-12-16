@@ -17,7 +17,7 @@ mcp = MCP.MCP3008(spi, cs)
 # create an analog input channel on pin 0
 chan0 = AnalogIn(mcp, MCP.P0)
 
-
+# rsistor value list
 resList = [33000, 6570, 8200, 891, 
            1000, 688, 2200, 1410,
            3900, 3140, 16000, 14120,
@@ -25,31 +25,15 @@ resList = [33000, 6570, 8200, 891,
 
 
 def voltDivider(res1, res2, voltIn):
+    """volt divider to calculate the out volts"""
     voltOut = (voltIn * res1) / (res1 + res2)
     return round(voltOut, 3)
 
-
-#for x in range(len(resList)):
-#    print(resList[x], voltDivider(10000, resList[x], 3.3))
-
-
-#while True:
-#    print(chan0.value)
-#   print(chan0.voltage)
-#    time.sleep(0.5)
-
-
+# initialize variables
 count = 0
 values = []
-#voltList = {2.4: 0.0,
-#            1.3: 45.0,
-#            0.3: 90.0,
-#            0.4: 135.0,
-#            0.8: 180.0,
-#            1.8: 225.0,
-#            3.0: 270.0,
-#            2.7: 315.0}
 
+# dictionary volts to wind direction in compass heading
 voltList = {1.8: 'N',
             2.0: 'NNE',
             0.7: 'NE',
@@ -70,6 +54,7 @@ voltList = {1.8: 'N',
 
 
 def getData():
+    """gather sensor data and return it as dictionary"""
     wind = round(chan0.voltage, 1)
     if not wind in voltList:
         winddir = "unknown"

@@ -6,20 +6,23 @@ import yaml
 from yaml.loader import SafeLoader
 from os.path import exists
 
-
+# read config file for PMSA003 sensor
 confFile = "conf/pmsa003.yml"
 if(exists(confFile)):
     with open(confFile, 'r') as f:
         data = yaml.load(f, Loader=SafeLoader)
 else:
+    # if no config file exists, set port to /dev/serial0
     conf = {
         "port": "/dev/serial0"
     }
 
+# initialize PMSA003  sensor on configured port and set it to sleep
 PMSA003 = PLANTOWER = plantower.Plantower(port=conf["port"])
 PLANTOWER.set_to_sleep()
 
 def getData():
+    """gather sensor data and return it as dictionary"""
     result = measure()
     return {
         "pm10_cf1": result[1],
@@ -38,6 +41,7 @@ def getData():
 
 
 def measure():
+    """perform measurement with PMSA003 sensor in passive mode"""
     PLANTOWER.set_to_wakeup()
     PLANTOWER.mode_change(plantower.PMS_PASSIVE_MODE)
     time.sleep(30)
